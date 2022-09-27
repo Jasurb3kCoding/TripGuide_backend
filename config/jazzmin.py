@@ -98,8 +98,10 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
+        "account.User": "fas fa-user",
         "auth.Group": "fas fa-users",
+        "account.LanguageSetting": "fas fa-language",
+        "account.TimeZoneSetting": "far fa-clock"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

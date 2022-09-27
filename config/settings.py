@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'debug_toolbar',
+    'drf_yasg',
 
     # Local Apps
     'account.apps.AccountConfig'
