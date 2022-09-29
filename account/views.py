@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework.permissions import IsAuthenticated
 
@@ -14,10 +15,14 @@ class UserCreateView(generics.CreateAPIView):
 
 
 class UserUpdateView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.User.objects.all()
+    queryset = models.User.verified.all()
     serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated, permissions.IsOwnerOrReadOnly]
     lookup_field = 'id'
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = serializers.MyTokenObtainPairSerializer
 
 
 class UserSettingUpdateView(generics.RetrieveUpdateAPIView):
@@ -32,8 +37,3 @@ class UserSettingUpdateView(generics.RetrieveUpdateAPIView):
 class LanguageListView(generics.ListAPIView):
     queryset = models.LanguageSetting.objects.all()
     serializer_class = serializers.LanguageSerializer
-
-
-class TimeZoneListView(generics.ListAPIView):
-    queryset = models.TimeZoneSetting.objects.all()
-    serializer_class = serializers.TimeZoneSerializer

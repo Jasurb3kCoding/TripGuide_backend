@@ -38,6 +38,11 @@ class UserManager(BaseUserManager):
         return user
 
 
+class VerifiedManager(models.Manager):
+    def get_queryset(self):
+        return super(VerifiedManager, self).get_queryset().filter(is_verified=True)
+
+
 def get_profile_image_path(self, filename):
     return f'profile_images/{self.id}.png'
 
@@ -55,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     profile_photo = models.ImageField(upload_to=get_profile_image_path, blank=True, null=True)
     background_photo = models.ImageField(upload_to=get_background_image_path, blank=True, null=True)
     phone_number = models.CharField(validators=[phone_number_validator], max_length=255, null=True, blank=True)
-    is_active= models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -65,6 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = UserManager()
+    verified = VerifiedManager()
 
     def __str__(self):
         return self.email
@@ -85,14 +91,6 @@ class LanguageSetting(models.Model):
         return self.title
 
 
-class TimeZoneSetting(models.Model):
-    title = models.CharField(max_length=255)
-    difference = models.FloatField(default=0)
-
-    def __str__(self):
-        return f'TimeZone {self.title}'
-
-
 class UserSetting(models.Model):
     user = models.OneToOneField(User,
                                 related_name='settings',
@@ -101,14 +99,7 @@ class UserSetting(models.Model):
                                  related_name='selected_users',
                                  on_delete=models.SET_NULL,
                                  null=True)
-    timezone = models.ForeignKey(TimeZoneSetting,
-                                 related_name='selected_users',
-                                 on_delete=models.SET_NULL,
-                                 null=True)
     is_24_system = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Setting for user {self.user.email}'
-
-
-

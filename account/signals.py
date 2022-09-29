@@ -10,3 +10,7 @@ def username_filler(sender, instance, created, **kwargs):
         instance.username = instance.email
         UserSetting.objects.create(user=instance)
         instance.save()
+    else:
+        if instance.email != instance.username:
+            instance.username = instance.email
+            instance.save()

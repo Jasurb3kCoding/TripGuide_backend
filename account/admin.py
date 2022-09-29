@@ -10,7 +10,6 @@ class UserSettingItemInline(admin.TabularInline):
 
 
 admin.site.register(models.LanguageSetting)
-admin.site.register(models.TimeZoneSetting)
 
 
 @admin.register(models.User)
@@ -30,6 +29,7 @@ class UserAdmin(UserAdmin):
                     "is_active",
                     "is_staff",
                     "is_superuser",
+                    "is_verified",
                     "groups",
                     "user_permissions",
                 ),
