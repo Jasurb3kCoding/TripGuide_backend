@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 
 from base.validators import phone_number_validator
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -103,3 +104,33 @@ class UserSetting(models.Model):
 
     def __str__(self):
         return f'Setting for user {self.user.email}'
+
+
+class PasswordRecoveryCode(models.Model):
+    user = models.ForeignKey(User,
+                             related_name='recovered_password_codes',
+                             on_delete=models.CASCADE)
+    code = models.CharField(max_length=255)
+    valid_from = models.DateTimeField(auto_now_add=True)
+    valid_to = models.DateTimeField()
+
+    def __str__(self):
+        return f'Code for {self.user.email}'
+
+    def is_valid(self):
+        return self.valid_from <= timezone.now() <= self.valid_to
+
+
+class PasswordRecoveryLink(models.Model):
+    user = models.ForeignKey(User,
+                             related_name='recovered_password_links',
+                             on_delete=models.CASCADE)
+    link = models.CharField(max_length=255)
+    valid_from = models.DateTimeField(auto_now_add=True)
+    valid_to = models.DateTimeField()
+
+    def __str__(self):
+        return f'Link for {self.user.email}'
+
+    def is_valid(self):
+        return self.valid_from <= timezone.now() <= self.valid_to

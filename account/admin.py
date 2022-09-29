@@ -10,6 +10,8 @@ class UserSettingItemInline(admin.TabularInline):
 
 
 admin.site.register(models.LanguageSetting)
+admin.site.register(models.PasswordRecoveryCode)
+admin.site.register(models.PasswordRecoveryLink)
 
 
 @admin.register(models.User)
