@@ -109,3 +109,6 @@ class UserSetting(models.Model):
 
     def __str__(self):
         return f'Setting for user {self.user.email}'
+
+
+
