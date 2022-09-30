@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'debug_toolbar',
     'drf_yasg',
+    'corsheaders',
 
     # Local Apps
     'account.apps.AccountConfig'
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -181,3 +183,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'hellotripguide@yandex.com'
 EMAIL_HOST_PASSWORD = 'dbvwnfofqhepqexf'
+
+CORS_ALLOWED_ORIGINS = [
+    '127.0.0.1:3000',
+    'localhost:3000'
+]
