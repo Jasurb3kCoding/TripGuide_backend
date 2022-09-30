@@ -15,19 +15,19 @@ admin.site.register(models.LanguageSetting)
 @admin.register(models.PasswordRecoveryCode)
 class PasswordRecoveryCodeAdmin(admin.ModelAdmin):
     list_display = ['user', 'valid_from', 'valid_to']
-    readonly_fields = ['code', 'valid_from', 'valid_to', 'user']
+    readonly_fields = ['code', 'valid_from', 'valid_to', 'user', 'email']
 
     fieldsets = (
         (None, {
-            'fields': ('user', 'valid_from', 'valid_to', 'code')
+            'fields': ('user', 'valid_from', 'valid_to', 'code', 'email')
         }),
     )
 
 
-@admin.register(models.PasswordRecoveryLink)
+@admin.register(models.PasswordRecoveryHash)
 class PasswordRecoveryLinkAdmin(admin.ModelAdmin):
     list_display = ['user', 'valid_from', 'valid_to']
-    readonly_fields = ['link', ]
+    readonly_fields = ['hash', 'user', 'valid_from', 'valid_to']
 
 
 @admin.register(models.User)

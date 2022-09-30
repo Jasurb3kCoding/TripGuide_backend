@@ -107,9 +107,11 @@ class UserSetting(models.Model):
 
 
 class PasswordRecoveryCode(models.Model):
+    email = models.EmailField(max_length=255)
     user = models.ForeignKey(User,
                              related_name='recovered_password_codes',
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE,
+                             null=True, blank=True)
     code = models.CharField(max_length=255)
     valid_from = models.DateTimeField(auto_now_add=True)
     valid_to = models.DateTimeField()
@@ -121,16 +123,21 @@ class PasswordRecoveryCode(models.Model):
         return self.valid_from <= timezone.now() <= self.valid_to
 
 
-class PasswordRecoveryLink(models.Model):
+class PasswordRecoveryHash(models.Model):
     user = models.ForeignKey(User,
-                             related_name='recovered_password_links',
+                             related_name='recovered_password_hashes',
                              on_delete=models.CASCADE)
-    link = models.URLField(max_length=255)
+    hash = models.CharField(max_length=255)
     valid_from = models.DateTimeField(auto_now_add=True)
     valid_to = models.DateTimeField()
+    expired = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Link for {self.user.email}'
+        return f'Hash for {self.user.email}'
 
     def is_valid(self):
         return self.valid_from <= timezone.now() <= self.valid_to
+
+
+class UserVerifyLink(models.Model):
+    pass

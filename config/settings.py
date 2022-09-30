@@ -172,5 +172,12 @@ try:
 except ModuleNotFoundError:
     pass
 
-PASSWORD_RECOVERY_CODE_LIFETIME = 60 * 5
-PASSWORD_RECOVERY_LINK_LIFETIME = 60 * 30
+PASSWORD_RECOVERY_CODE_LIFETIME = 60 * 60
+PASSWORD_RECOVERY_HASH_LIFETIME = 60 * 60 * 2
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hellotripguide@yandex.com'
+EMAIL_HOST_PASSWORD = 'dbvwnfofqhepqexf'

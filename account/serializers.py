@@ -1,3 +1,5 @@
+from abc import ABC
+
 from django.contrib.auth import authenticate
 from rest_framework import exceptions
 from rest_framework import serializers
@@ -97,7 +99,6 @@ class PasswordRecoveryCodeSerializer(serializers.ModelSerializer):
         exclude = ['code', ]
 
 
-class PasswordRecoveryLinkSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.PasswordRecoveryLink
-        fields = '__all__'
+class PasswordRecoveryCodeCheckSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    code = serializers.CharField()
