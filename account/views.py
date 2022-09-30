@@ -57,29 +57,46 @@ class LanguageListView(generics.ListAPIView):
     serializer_class = serializers.LanguageSerializer
 
 
-class PasswordRecoveryCodeView(generics.CreateAPIView):
-    queryset = models.PasswordRecoveryCode.objects.all()
-    serializer_class = serializers.PasswordRecoveryCodeSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(valid_to=timezone.now() + datetime.timedelta(seconds=PASSWORD_RECOVERY_CODE_LIFETIME))
 
 
 @api_view(['POST'])
-def password_recovery_code_verify(request):
-    serializer = serializers.PasswordRecoveryCodeCheckSerializer(data=request.data)
+def user_verify(request):
+    serializer = serializers.UserVerificationSerializer(data=request.data)
     if serializer.is_valid():
         email = request.data.get('email')
         code = request.data.get('code')
+        print(email, code)
         hash_code = md5(code.encode()).hexdigest()
-        obj = models.PasswordRecoveryCode.objects.filter(email=email, code=hash_code).last()
+        print(hash_code)
+        obj = models.UserVerificationCode.objects.filter(email=email, code=hash_code).last()
+        print(models.UserVerificationCode.objects.last().code==hash_code)
+        print(obj)
         if obj and obj.is_valid():
-            uid = uuid4()
-            models.PasswordRecoveryHash.objects.create(user=obj.user, hash=uid,
-                                                       valid_to=timezone.now() + datetime.timedelta(
-                                                           seconds=PASSWORD_RECOVERY_HASH_LIFETIME))
-            return Response({'access': uid}, status=status.HTTP_200_OK)
+            user = obj.user
+            user.is_verified = True
+            user.save()
+            return Response({'success': True}, status=status.HTTP_200_OK)
         else:
-            return Response({'access': None}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
     else:
+        serializer.errors['success'] = False
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# def iya(request):
+#     serializer = serializers.PasswordRecoveryCodeCheckSerializer(data=request.data)
+#     if serializer.is_valid():
+#         email = request.data.get('email')
+#         code = request.data.get('code')
+#         hash_code = md5(code.encode()).hexdigest()
+#         obj = models.PasswordRecoveryCode.objects.filter(email=email, code=hash_code).last()
+#         if obj and obj.is_valid():
+#             uid = uuid4()
+#             models.PasswordRecoveryHash.objects.create(user=obj.user, hash=uid,
+#                                                        valid_to=timezone.now() + datetime.timedelta(
+#                                                            seconds=PASSWORD_RECOVERY_HASH_LIFETIME))
+#             return Response({'access': uid}, status=status.HTTP_200_OK)
+#         else:
+#             return Response({'access': None}, status=status.HTTP_400_BAD_REQUEST)
+#     else:
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

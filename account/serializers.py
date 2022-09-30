@@ -91,14 +91,8 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PasswordRecoveryCodeSerializer(serializers.ModelSerializer):
-    valid_to = serializers.DateTimeField(required=False)
-
-    class Meta:
-        model = models.PasswordRecoveryCode
-        exclude = ['code', ]
 
 
-class PasswordRecoveryCodeCheckSerializer(serializers.Serializer):
+class UserVerificationSerializer(serializers.Serializer):
     email = serializers.CharField()
     code = serializers.CharField()

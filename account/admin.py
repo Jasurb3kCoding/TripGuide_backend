@@ -12,7 +12,7 @@ class UserSettingItemInline(admin.TabularInline):
 admin.site.register(models.LanguageSetting)
 
 
-@admin.register(models.PasswordRecoveryCode)
+@admin.register(models.UserVerificationCode)
 class PasswordRecoveryCodeAdmin(admin.ModelAdmin):
     list_display = ['user', 'valid_from', 'valid_to']
     readonly_fields = ['code', 'valid_from', 'valid_to', 'user', 'email']
@@ -22,12 +22,6 @@ class PasswordRecoveryCodeAdmin(admin.ModelAdmin):
             'fields': ('user', 'valid_from', 'valid_to', 'code', 'email')
         }),
     )
-
-
-@admin.register(models.PasswordRecoveryHash)
-class PasswordRecoveryLinkAdmin(admin.ModelAdmin):
-    list_display = ['user', 'valid_from', 'valid_to']
-    readonly_fields = ['hash', 'user', 'valid_from', 'valid_to']
 
 
 @admin.register(models.User)
