@@ -1,18 +1,13 @@
+from hashlib import md5
+
 from django.shortcuts import get_object_or_404
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
-from django.contrib.auth.hashers import check_password, make_password
-from rest_framework.response import Response
-from hashlib import md5
-from uuid import uuid4
-from rest_framework_simplejwt.views import TokenObtainPairView
-from django.utils import timezone
-import datetime
-
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from account import serializers, models, permissions
-from config.settings import PASSWORD_RECOVERY_CODE_LIFETIME, PASSWORD_RECOVERY_HASH_LIFETIME
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -57,25 +52,25 @@ class LanguageListView(generics.ListAPIView):
     serializer_class = serializers.LanguageSerializer
 
 
-
-
 @api_view(['POST'])
 def user_verify(request):
     serializer = serializers.UserVerificationSerializer(data=request.data)
     if serializer.is_valid():
         email = request.data.get('email')
         code = request.data.get('code')
-        print(email, code)
         hash_code = md5(code.encode()).hexdigest()
-        print(hash_code)
         obj = models.UserVerificationCode.objects.filter(email=email, code=hash_code).last()
-        print(models.UserVerificationCode.objects.last().code==hash_code)
-        print(obj)
         if obj and obj.is_valid():
             user = obj.user
             user.is_verified = True
             user.save()
-            return Response({'success': True}, status=status.HTTP_200_OK)
+            refresh = serializers.MyTokenObtainPairSerializer().get_token(user)
+            data = {
+                'success': True,
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
+            }
+            return Response(data, status=status.HTTP_200_OK)
         else:
             return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
     else:

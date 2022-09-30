@@ -1,5 +1,3 @@
-from abc import ABC
-
 from django.contrib.auth import authenticate
 from rest_framework import exceptions
 from rest_framework import serializers
@@ -89,8 +87,6 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.LanguageSetting
         fields = '__all__'
-
-
 
 
 class UserVerificationSerializer(serializers.Serializer):

@@ -1,15 +1,14 @@
-from django.db.models.signals import post_save, pre_save
+import datetime
 from hashlib import md5
 from random import randint
-from django.dispatch import receiver
-from django.core.mail import send_mail
-from config import settings
-import datetime
-from django.utils import timezone
-from config import settings
 
-import account.models
+from django.core.mail import send_mail
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
+
 from account.models import User, UserSetting, UserVerificationCode
+from config import settings
 
 
 @receiver(post_save, sender=User)
