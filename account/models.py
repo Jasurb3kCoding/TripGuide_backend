@@ -125,7 +125,7 @@ class PasswordRecoveryLink(models.Model):
     user = models.ForeignKey(User,
                              related_name='recovered_password_links',
                              on_delete=models.CASCADE)
-    link = models.CharField(max_length=255)
+    link = models.URLField(max_length=255)
     valid_from = models.DateTimeField(auto_now_add=True)
     valid_to = models.DateTimeField()
 

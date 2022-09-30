@@ -10,8 +10,24 @@ class UserSettingItemInline(admin.TabularInline):
 
 
 admin.site.register(models.LanguageSetting)
-admin.site.register(models.PasswordRecoveryCode)
-admin.site.register(models.PasswordRecoveryLink)
+
+
+@admin.register(models.PasswordRecoveryCode)
+class PasswordRecoveryCodeAdmin(admin.ModelAdmin):
+    list_display = ['user', 'valid_from', 'valid_to']
+    readonly_fields = ['code', 'valid_from', 'valid_to', 'user']
+
+    fieldsets = (
+        (None, {
+            'fields': ('user', 'valid_from', 'valid_to', 'code')
+        }),
+    )
+
+
+@admin.register(models.PasswordRecoveryLink)
+class PasswordRecoveryLinkAdmin(admin.ModelAdmin):
+    list_display = ['user', 'valid_from', 'valid_to']
+    readonly_fields = ['link', ]
 
 
 @admin.register(models.User)

@@ -171,3 +171,6 @@ try:
     from config.jazzmin import *
 except ModuleNotFoundError:
     pass
+
+PASSWORD_RECOVERY_CODE_LIFETIME = 60 * 5
+PASSWORD_RECOVERY_LINK_LIFETIME = 60 * 30

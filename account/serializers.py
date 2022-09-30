@@ -87,3 +87,17 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.LanguageSetting
         fields = '__all__'
+
+
+class PasswordRecoveryCodeSerializer(serializers.ModelSerializer):
+    valid_to = serializers.DateTimeField(required=False)
+
+    class Meta:
+        model = models.PasswordRecoveryCode
+        exclude = ['code', ]
+
+
+class PasswordRecoveryLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.PasswordRecoveryLink
+        fields = '__all__'
