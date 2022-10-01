@@ -48,7 +48,7 @@ class MyTokenObtainSerializer(TokenObtainSerializer):
             pass
 
         self.user = authenticate(**authenticate_kwargs)
-        if self.user.is_verified == False:
+        if self.user and self.user.is_verified == False:
             self.user = None
 
         if not api_settings.USER_AUTHENTICATION_RULE(self.user):
