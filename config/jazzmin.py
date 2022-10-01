@@ -101,7 +101,8 @@ JAZZMIN_SETTINGS = {
         "account.User": "fas fa-user",
         "auth.Group": "fas fa-users",
         "account.LanguageSetting": "fas fa-language",
-        "account.TimeZoneSetting": "far fa-clock"
+        "account.UserVerificationCode": "fas fa-user-check",
+        "token_blacklist.blacklistedtoken": "fas fa-ban"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

@@ -90,5 +90,15 @@ class LanguageSerializer(serializers.ModelSerializer):
 
 
 class UserVerificationSerializer(serializers.Serializer):
-    email = serializers.CharField()
+    email = serializers.EmailField()
     code = serializers.CharField()
+
+
+class UserPassowordRecoveryLinkSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PasswordRecoverySerializer(serializers.Serializer):
+    uid = serializers.CharField()
+    password1 = serializers.CharField()
+    password2 = serializers.CharField()

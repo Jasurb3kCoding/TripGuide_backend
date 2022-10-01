@@ -174,8 +174,8 @@ try:
 except ModuleNotFoundError:
     pass
 
-PASSWORD_RECOVERY_CODE_LIFETIME = 60 * 60
-PASSWORD_RECOVERY_HASH_LIFETIME = 60 * 60 * 2
+USER_VERIFICATION_CODE_LIFETIME = 60 * 60
+PASSWORD_RECOVERY_LINK_LIFETIME = 60 * 60 * 2
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -190,3 +190,5 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000'
 ]
+
+FRONTEND_URL = 'http://127.0.0.1:3000/'

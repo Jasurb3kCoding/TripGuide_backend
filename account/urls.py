@@ -13,5 +13,7 @@ urlpatterns = [
     path('user-settings/<int:id>/', views.UserSettingUpdateView.as_view()),
     path('languages/', views.LanguageListView.as_view()),
     path('user-verify/', views.user_verify),
+    path('password-recovery-send-email/', views.password_recovery_link),
+    path('password-recovery/', views.password_recovery),
 
 ]

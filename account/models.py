@@ -128,16 +128,15 @@ class PasswordRecoveryLink(models.Model):
                              on_delete=models.CASCADE,
                              null=True, blank=True)
     link = models.URLField(max_length=255)
+    uid = models.CharField(max_length=255)
     valid_from = models.DateTimeField(auto_now_add=True)
     valid_to = models.DateTimeField()
     expired = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Hash for {self.user.email}'
+        return f'Link for {self.user.email}'
 
     def is_valid(self):
         return self.valid_from <= timezone.now() <= self.valid_to
 
 
-class UserVerifyLink(models.Model):
-    pass

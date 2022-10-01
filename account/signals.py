@@ -23,7 +23,7 @@ def user_created(sender, instance, created, **kwargs):
                                             code=hash_code,
                                             user=instance,
                                             valid_to=timezone.now() + datetime.timedelta(
-                                                seconds=settings.PASSWORD_RECOVERY_HASH_LIFETIME))
+                                                seconds=settings.USER_VERIFICATION_CODE_LIFETIME))
         send_mail(subject='You’re almost done!', message=f''' Hi {instance.first_name}
                                                 Your verification code is {code}.
                                                 
