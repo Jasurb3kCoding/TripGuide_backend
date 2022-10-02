@@ -102,6 +102,7 @@ JAZZMIN_SETTINGS = {
         "auth.Group": "fas fa-users",
         "account.LanguageSetting": "fas fa-language",
         "account.UserVerificationCode": "fas fa-user-check",
+        "account.PasswordRecoveryLink": "fas fa-key",
         "token_blacklist.blacklistedtoken": "fas fa-ban"
     },
     # Icons that are used when one is not manually specified

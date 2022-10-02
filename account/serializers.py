@@ -4,7 +4,6 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from account import models
 
 
@@ -17,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         print(validated_data)
         fields = list(super().get_fields().keys())
         [fields.remove(item) for item in
-         ['email', 'first_name', 'last_name', 'profile_photo', 'background_photo']]
+         ['email', 'first_name', 'last_name', 'profile_photo', 'background_photo', 'phone_number']]
         print(fields)
         for field in fields:
             if field in validated_data:
