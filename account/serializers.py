@@ -8,6 +8,12 @@ from account import models
 
 
 class UserSerializer(serializers.ModelSerializer):
+
+    password = serializers.CharField(min_length=6, max_length=15)
+    first_name = serializers.CharField(min_length=3, max_length=20)
+    last_name = serializers.CharField(min_length=3, max_length=20)
+
+
     class Meta:
         model = models.User
         fields = '__all__'
@@ -27,6 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password')
+        print(password)
         user = super().create(validated_data)
         user.set_password(password)
         user.is_active = True
@@ -47,6 +54,7 @@ class MyTokenObtainSerializer(TokenObtainSerializer):
             pass
 
         self.user = authenticate(**authenticate_kwargs)
+        print(authenticate_kwargs)
         if self.user and self.user.is_verified == False:
             self.user = None
 

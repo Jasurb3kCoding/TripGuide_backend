@@ -24,7 +24,7 @@ def user_created(sender, instance, created, **kwargs):
                                             user=instance,
                                             valid_to=timezone.now() + datetime.timedelta(
                                                 seconds=settings.USER_VERIFICATION_CODE_LIFETIME))
-        send_mail(subject='You’re almost done!', message=f''' Hi {instance.first_name}
+        send_code = send_mail(subject='You’re almost done!', message=f''' Hi {instance.first_name}
                                                 Your verification code is {code}.
                                                 
                                                 Enter this code in our web site to activate your account.
@@ -34,6 +34,7 @@ def user_created(sender, instance, created, **kwargs):
                                                 We’re glad you’re here!
                                                 The TripGuide team''',
                   from_email=settings.EMAIL_HOST_USER, recipient_list=[instance.email, ])
+        print(send_code)
 
     else:
         if instance.email != instance.username:
