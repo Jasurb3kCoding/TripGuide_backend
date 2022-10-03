@@ -8,15 +8,13 @@ from account import models
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     password = serializers.CharField(min_length=6, max_length=15)
     first_name = serializers.CharField(min_length=3, max_length=20)
     last_name = serializers.CharField(min_length=3, max_length=20)
 
-
     class Meta:
         model = models.User
-        fields = '__all__'
+        exclude = ['is_admin', 'is_superuser', 'is_staff', 'is_verified', 'is_active']
 
     def update(self, instance, validated_data):
         print(validated_data)
