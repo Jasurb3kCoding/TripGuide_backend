@@ -99,7 +99,10 @@ def password_recovery_link(request):
                                                              link=link,
                                                              uid=uid)
             send_mail(subject='Your password reset link',
-                      message=f'Hi {user.first_name},\n\nThere was a request to change your password!\n\nIf you did not make this request then please ignore this email.\n\nOtherwise, please click this link to change your password: {obj.link}',
+                      message=f'Hi {user.first_name},\n\n'
+                              f'There was a request to change your password!\n\n'
+                              f'If you did not make this request then please ignore this email.\n\n'
+                              f'Otherwise, please click this link to change your password: {obj.link}',
                       from_email=settings.EMAIL_HOST_USER, recipient_list=[email, ])
             return Response({'success': True, 'message': 'We\'ve send password recovery link to your email'},
                             status=status.HTTP_200_OK)
