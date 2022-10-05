@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Local Apps
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
     'hotels'
 ]
 
