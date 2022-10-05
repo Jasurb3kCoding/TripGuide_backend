@@ -70,6 +70,14 @@ class MyTokenObtainSerializer(TokenObtainSerializer):
 
 
 class MyTokenObtainPairSerializer(MyTokenObtainSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['full_name'] = user.full_name
+
+        return token
+
     token_class = RefreshToken
 
     def validate(self, attrs):

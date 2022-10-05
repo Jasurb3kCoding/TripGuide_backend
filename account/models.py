@@ -76,6 +76,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
