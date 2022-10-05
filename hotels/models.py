@@ -20,7 +20,7 @@ class City(models.Model):
 
 class HotelFeature(models.Model):
     title = models.CharField(max_length=250)
-    icon = models.CharField(max_length=50)
+    icon = models.ImageField()
     is_active = models.BooleanField()
 
     def __str__(self):
