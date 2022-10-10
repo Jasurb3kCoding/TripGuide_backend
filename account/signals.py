@@ -1,5 +1,4 @@
 import datetime
-from hashlib import md5
 from random import randint
 
 from django.core.mail import send_mail
@@ -8,6 +7,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from account.models import User, UserSetting, UserVerificationCode
+from base.utils import trip_hash
 from config import settings
 
 
@@ -18,7 +18,7 @@ def user_created(sender, instance, created, **kwargs):
         instance.save()
         UserSetting.objects.create(user=instance)
         code = str(randint(1000, 9999))
-        hash_code = md5(code.encode()).hexdigest()
+        hash_code = trip_hash(code)
         UserVerificationCode.objects.create(email=instance.email,
                                             code=hash_code,
                                             user=instance,

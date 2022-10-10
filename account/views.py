@@ -1,5 +1,4 @@
 import datetime
-from hashlib import md5
 from uuid import uuid4
 
 from django.core.mail import send_mail
@@ -12,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from account import serializers, models, permissions
+from base.utils import trip_hash
 from config import settings
 
 
@@ -63,7 +63,7 @@ def user_verify(request):
     if serializer.is_valid():
         email = request.data.get('email')
         code = request.data.get('code')
-        hash_code = md5(code.encode()).hexdigest()
+        hash_code = trip_hash(code)
         obj = models.UserVerificationCode.objects.filter(email=email, code=hash_code).last()
         if obj and obj.is_valid():
             user = obj.user
