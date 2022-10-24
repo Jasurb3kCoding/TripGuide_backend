@@ -127,16 +127,12 @@ def password_recovery(request):
         obj = models.PasswordRecoveryLink.objects.filter(uid=uid).last()
         if obj and not obj.expired:
             user = obj.user
-            if password1 == password2:
-                user.set_password(password1)
-                user.save()
-                obj.expired = True
-                obj.save()
-                return Response({'success': True, 'message': 'Your password changed successfully!'},
-                                status=status.HTTP_200_OK)
-            else:
-                return Response({'success': False, 'message': 'Password didn\'t match'},
-                                status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(password1)
+            user.save()
+            obj.expired = True
+            obj.save()
+            return Response({'success': True, 'message': 'Your password changed successfully!'},
+                            status=status.HTTP_200_OK)
         else:
             return Response({'success': False, 'message': 'This link was expired please try again with another link'},
                             status=status.HTTP_400_BAD_REQUEST)

@@ -113,5 +113,4 @@ class UserPassowordRecoveryLinkSerializer(serializers.Serializer):
 
 class PasswordRecoverySerializer(serializers.Serializer):
     uid = serializers.CharField()
-    password1 = serializers.CharField()
-    password2 = serializers.CharField()
+    password = serializers.CharField()
